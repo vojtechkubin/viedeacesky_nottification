@@ -26,6 +26,7 @@ def program():
     message = []
     buttons = []
     pictures = []
+    rating = []
     urls = []
     f = urllib2.urlopen("http://www.videacesky.cz/")
     content = f.read()
@@ -36,10 +37,12 @@ def program():
 #--------------------------------------- odkaz, obrazek ------------------------------
     result3 = re.findall(ur'<a href="(http:\/\/www\.videacesky\.cz\/.*)" class=".*"><img src="(http:\/\/img.youtube.com\/.*jpg)".*\/>', content)
 
-    y = -1
+
     for x in result:
-        y+=1
-        message.append(re.sub(r'&#\d*;',"", x[0])+": "+result2[y]+"/10"+ '\n')
+        message.append(re.sub(r'&#\d*;',"", x[0])+ '\n')
+
+    for x in result2:
+        rating.append(x[0])
 
     for x in result3:
         pictures.append(x[1])
@@ -52,11 +55,13 @@ def program():
         soubor.close()
     else:
         seznam = message
-
-    for i in message:
-        if (i in seznam) == False:
+        
+    y=-1
+    for row in message:
+        y+=1
+        if (row in seznam) == False:
             say = ""
-            say += i + '\n'
+            say += row + "rate: " + rating[y] + "/10" + '\n'
             libary.append(say)
 
     
