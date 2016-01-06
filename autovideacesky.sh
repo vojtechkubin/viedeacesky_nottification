@@ -1,3 +1,3 @@
 #!/bin/bash
-
-python ~/skript_videos.py
+sleep 10
+python ~/git/viedeacesky_nottification/skript_videos.py

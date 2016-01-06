@@ -20,7 +20,6 @@ def fileexist(nazev):
         return True
 #------------------program------------
 def program():
-    root = Tkinter.Tk()
     say = ""
     libary = []
     message = []
@@ -35,7 +34,7 @@ def program():
 #-------------------------------------- hodnoceni----------------------------------
     result2 = re.findall(ur'\d*.*hodnocen.*,.*pr.*m.*r:.*<strong>([\d,\,]*)<\/strong>.*z 10', content)
 #--------------------------------------- odkaz, obrazek ------------------------------
-    result3 = re.findall(ur'<a href="(http:\/\/www\.videacesky\.cz\/.*)" class=".*"><img src="(http:\/\/img.youtube.com\/.*jpg)".*\/>', content)
+    result3 = re.findall(ur'<a href="(http:\/\/www\.videacesky\.cz\/.*)" class=".*"><img src="(http:\/\/.*jpg)".*\/>', content)
 
 
     for x in result:
@@ -67,8 +66,9 @@ def program():
     
 #-------------print------------------
 
-
     if say != "":
+        root = Tkinter.Tk()
+        root.wm_title("Videa_Links:")
         for x in range (len(libary)):
             buttons.append(Tkinter.Button(root, text = libary[x], command = lambda url=urls[x]: webbrowser.open_new_tab(url)))
             buttons[x].pack()
