@@ -1,15 +1,13 @@
 #!/usr/bin/env python
 import urllib2
 import re
-import ctypes
 import Tkinter
-import tkMessageBox
 import webbrowser
-import io
 import time
-from PIL import Image, ImageTk
 
 #-----------------file exist---------------
+
+
 def fileexist(nazev):
     try:
         soubor = open(nazev, 'r')
@@ -18,7 +16,10 @@ def fileexist(nazev):
     else:
         soubor.close()
         return True
+
 #------------------program------------
+
+
 def program():
     say = ""
     libary = []
@@ -36,9 +37,8 @@ def program():
 #--------------------------------------- odkaz, obrazek ------------------------------
     result3 = re.findall(ur'<a href="(http:\/\/www\.videacesky\.cz\/.*)" class=".*"><img src="(http:\/\/.*jpg)".*\/>', content)
 
-
     for x in result:
-        message.append(re.sub(r'&#\d*;',"", x[0])+ '\n')
+        message.append(re.sub(r'&#\d*;', "", x[0]) + '\n')
 
     for x in result2:
         rating.append(x[0])
@@ -47,30 +47,28 @@ def program():
         pictures.append(x[1])
         urls.append(x[0])
 
-
     if fileexist("videa.txt"):
         soubor = open("videa.txt", 'r')
         seznam = soubor.readlines()
         soubor.close()
     else:
         seznam = message
-        
-    y=-1
+
+    y = -1
     for row in message:
-        y+=1
-        if (row in seznam) == False:
+        y += 1
+        if (row in seznam) is False:
             say = ""
             say += row + "rate: " + rating[y] + "/10" + '\n'
             libary.append(say)
 
-    
 #-------------print------------------
 
     if say != "":
         root = Tkinter.Tk()
         root.wm_title("Videa_Links:")
-        for x in range (len(libary)):
-            buttons.append(Tkinter.Button(root, text = libary[x], command = lambda url=urls[x]: webbrowser.open_new_tab(url)))
+        for x in range(len(libary)):
+            buttons.append(Tkinter.Button(root, text=libary[x], command=lambda url=urls[x]: webbrowser.open_new_tab(url)))
             buttons[x].pack()
         root.mainloop()
         soubor = open("videa.txt", 'w')
@@ -78,10 +76,7 @@ def program():
             soubor.write(x)
 
     soubor.close()
-    
+
 while True:
     program()
     time.sleep(600)
-
-
-
