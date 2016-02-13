@@ -5,8 +5,6 @@ import Tkinter
 import webbrowser
 import time
 
-#-----------------file exist---------------
-
 
 def fileexist(nazev):
     try:
@@ -17,10 +15,8 @@ def fileexist(nazev):
         soubor.close()
         return True
 
-#------------------program------------
 
-
-def program():
+def main():
     say = ""
     libary = []
     message = []
@@ -28,22 +24,20 @@ def program():
     pictures = []
     rating = []
     urls = []
+
     f = urllib2.urlopen("http://www.videacesky.cz/")
     content = f.read()
-#------------------------------------- nazev ----------------------------------
-    result = re.findall(ur'title=".*"><span>(.*)(&#\d*)?(.*)<\/span><\/a><\/h2>', content)
-#-------------------------------------- hodnoceni----------------------------------
-    result2 = re.findall(ur'\d*.*hodnocen.*,.*pr.*m.*r:.*<strong>([\d,\,]*)<\/strong>.*z 10', content)
-#--------------------------------------- odkaz, obrazek ------------------------------
-    result3 = re.findall(ur'<a href="(http:\/\/www\.videacesky\.cz\/.*)" class=".*"><img src="(http:\/\/.*jpg)".*\/>', content)
+    titles = re.findall(ur'title=".*"><span>(.*)(&#\d*)?(.*)<\/span><\/a><\/h2>', content)
+    evaluvations = re.findall(ur'\d*.*hodnocen.*,.*pr.*m.*r:.*<strong>([\d,\,]*)<\/strong>.*z 10', content)
+    linksAndPictures = re.findall(ur'<a href="(http:\/\/www\.videacesky\.cz\/.*)" class=".*"><img src="(http:\/\/.*jpg)".*\/>', content)
 
-    for x in result:
+    for x in titles:
         message.append(re.sub(r'&#\d*;', "", x[0]) + '\n')
 
-    for x in result2:
+    for x in evaluvations:
         rating.append(x[0])
 
-    for x in result3:
+    for x in linksAndPictures:
         pictures.append(x[1])
         urls.append(x[0])
 
@@ -78,5 +72,5 @@ def program():
     soubor.close()
 
 while True:
-    program()
+    main()
     time.sleep(600)
